@@ -1,0 +1,7 @@
+<span>
+  <h3>Flight from <%= flight.depart_airport.code %> to <%= flight.arrive_airport.code %></h3>
+  <div>Date: <%= flight.depart_time.to_date %></div>
+  <div>Departure Time: <%= flight.depart_time.strftime('%H:%M') %></div> 
+  <div>Arrival Time: <%= flight.arrive_time.strftime('%H:%M') %></div>
+  <div>Duration: <%= format_duration(flight.duration) %></div>
+</span>

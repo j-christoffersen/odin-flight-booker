@@ -1,0 +1,19 @@
+<h1>Search for a flight</h1>
+<%= form_tag("/flights", method: "get") do %>
+  <%= select_tag(:depart_airport_id, options_for_select(@airport_options)) %>
+  <%= select_tag(:arrive_airport_id, options_for_select(@airport_options)) %>
+  <%= select_tag(:passengers, options_for_select([1,2,3,4])) %>
+  <%= select_tag(:date, options_for_select(@dates)) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<% if !@flights.nil? && @flights.any? %>
+  <h2>Flights:</h2>
+  <%= form_tag("/bookings/new", method: "get") %>
+    <% @flights.each do |flight| %>
+      <%= radio_button_tag(:flight_id, flight.id) %>
+      <%= label_tag("flight-id-#{flight.id}", render(flight) ) %>
+    <% end %>
+    <%= hidden_field_tag(:passengers, @passengers) %>
+    <%= submit_tag("Continue") %>
+<% end %>
