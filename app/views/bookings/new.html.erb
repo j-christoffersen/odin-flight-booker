@@ -1,12 +1,18 @@
 <h1>Flight:</h1>
 <%= render @flight %>
 <%= form_tag bookings_path do %>
-  <% @bookings.each_with_index do |b, i| %>
-    <%= fields_for b.passenger do |p_form| %>
-      <%= label_tag "name[#{i}]", "Passenger #{i+1} Name:" %>
-      <%= p_form.text_field "name[#{i}]" %>
+  <ul>
+    <% @bookings.each_with_index do |b, i| %>
+      <li>
+        <%= fields_for b.passenger do |p_form| %>
+          <%= label_tag "name[#{i}]", "Passenger #{i+1} Name:" %>
+          <%= p_form.text_field "name[#{i}]" %>
+          <%= label_tag "email[#{i}]", "Passenger #{i+1} Email:" %>
+          <%= p_form.email_field "email[#{i}]" %>
+        <% end %>
+      </li>
     <% end %>
-  <% end %>
+  </ul>
   <%= hidden_field_tag(:flight_id, @flight.id) %>
   <%= submit_tag("Book This Flight") %>
 <% end %>

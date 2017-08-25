@@ -8,9 +8,10 @@ class BookingsController < ApplicationController
     flight = Flight.find params[:flight_id]
     booking_params = params.permit(:name => [])
     params[:name].each do |i, name|
-      passenger = Passenger.find_or_create_by(name: name)
+      passenger = Passenger.find_or_create_by(name: name, email: params[:email][i])
       unless flight.passengers.find_by(name: name)
         flight.passengers << passenger
+        PassengerMailer.thank_you(passenger, passenger.bookings.where(flight: flight).first).deliver_now!
         flight.save
       end
     end
